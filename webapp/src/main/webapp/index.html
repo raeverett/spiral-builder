@@ -1,0 +1,77 @@
+<!doctype html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Rally Exercise - Spiral Builder</title>
+        <link rel="stylesheet" href="spiral.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script src="spiral.js"></script>
+    </head>
+
+    <body ng-app="SpiralApp">
+
+        <div ng-controller="SpiralController">
+            <section>
+                <input type="range" min="0" max="99" step="1" ng-model="end" ng-mouseup="refreshSpiral()" ng-keyup="refreshSpiral()">{{ end }}
+            </section>
+
+            <section>
+                <select type="select" ng-model="direction" ng-change="refreshSpiral()">
+                    <option value="RIGHT">Right</option>
+                    <option value="LEFT">Left</option>
+                    <option value="UP">Up</option>
+                    <option value="DOWN">Down</option>
+                </select>
+
+                <select type="select" ng-model="rotation" ng-change="refreshSpiral()">
+                    <option value="CLOCKWISE">Clockwise</option>
+                    <option value="COUNTER_CLOCKWISE">Counter Clockwise</option>
+                </select>
+
+                <select type="select" ng-model="style" ng-change="refreshSpiral()">
+                    <option value="PLAIN">Plain</option>
+                    <option value="PRETTY">Pretty</option>
+                </select>
+
+                <select type="select" ng-model="order" ng-change="refreshSpiral()">
+                    <option value="FORWARD">Forward</option>
+                    <option value="REVERSE">Reverse</option>
+                </select>
+            </section>
+
+            <div ng-switch on="style" ng-hide="errorMsg">
+                <div ng-switch-when="PRETTY">
+                    <section>
+                        <table>
+                            <tr ng-repeat="row in spiral.table.rows">
+                                <td ng-repeat="column in row.columns">{{ column.value }}</td>
+                            </tr>
+                        </table>
+                    </section>
+                </div>
+
+                <div ng-switch-when="PLAIN">
+                    <section>
+                        <pre>{{ spiral }}</pre>
+                    </section>
+                </div>
+            </div>
+            
+
+            <div ng-show="errorMsg" id="error">
+                <section>
+                    <pre>{{ errorMsg }}</pre>
+                </section>
+            </div>
+
+            <section id="details">
+                <details>
+                    <summary>Response Body</summary>
+                      <pre>{{ spiral }}</pre>
+                </details>
+            </section>
+        </div>
+
+    </body>
+</html>
